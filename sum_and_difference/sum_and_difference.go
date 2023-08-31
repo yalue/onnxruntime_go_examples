@@ -140,7 +140,7 @@ func run() int {
 		"The path to the onnxruntime shared library for your system.")
 	flag.Parse()
 	if onnxruntimeLibPath == "" {
-		fmt.Printf("You must specify a path to the onnxruntime shared " +
+		fmt.Println("You must specify a path to the onnxruntime shared " +
 			"on your system. Run with -help for more information.")
 		return 1
 	}
