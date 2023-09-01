@@ -93,12 +93,13 @@ func runTest(onnxruntimeLibPath string) error {
 	// Step 4: Load the network itself into an onnxruntime Session instance.
 	// Note that we call "NewAdvancedSession"---this isn't particularly
 	// "Advanced", but it's simply a newer version of the API that allows
-	// specifying additional options (which we don't use here). Note that onnx
+	// specifying additional options (which we don't use here). onnxruntime
 	// requires associating input and output tensors with names, which in this
 	// case we set to "1x4 Input Vector" and "1x2 Output Vector" when creating
-	// the network. (If you're curious, this was done in the python script.)
-	// The last argument to NewAdvancedSession is a pointer to a SessionOptions
-	// instance, which we leave as nil to indicate that default options are OK.
+	// the network. (If you're curious, this was done when exporting the .onnx
+	// file from the the python script.) The last argument to
+	// NewAdvancedSession is a pointer to a SessionOptions instance, which we
+	// leave as nil to indicate that default options are OK.
 	session, e := ort.NewAdvancedSession("./sum_and_difference.onnx",
 		[]string{"1x4 Input Vector"},
 		[]string{"1x2 Output Vector"},
@@ -108,9 +109,9 @@ func runTest(onnxruntimeLibPath string) error {
 	if e != nil {
 		return fmt.Errorf("Error creating the session: %w", e)
 	}
-	// The session must also always be destroyed to free internal data. Note
-	// that destroying the session will not modify or destroy the input or
-	// output tensors it was using.
+	// The session must also always be destroyed to free internal data.
+	// Destroying the session will not modify or destroy the input or output
+	// tensors it was using.
 	defer session.Destroy()
 
 	// Step 5: Actually run the network. This will read the data from the input
@@ -122,9 +123,9 @@ func runTest(onnxruntimeLibPath string) error {
 		return fmt.Errorf("Error executing the network: %w", e)
 	}
 
-	// Step 6: Read the output data and present the results. Note that the
-	// network may not be very good, but it was designed to be a small test and
-	// not trained for very long!
+	// Step 6: Read the output data and present the results. The network may
+	// not be very good, but it was designed to be a small test and not trained
+	// for very long!
 	outputData := outputTensor.GetData()
 	fmt.Printf("The network ran without errors.\n")
 	fmt.Printf("  Input data: %v\n", inputData)

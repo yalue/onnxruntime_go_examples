@@ -264,7 +264,7 @@ func run() int {
 		"The image containing a digit to classify.")
 	flag.BoolVar(&invertImage, "invert_image", false,
 		"If set, the image's colors will be inverted before processing. "+
-			"Note that the network expects a dark background, so you should "+
+			"The network expects inputs with dark backgrounds, so you should "+
 			"set this to true for images with light backgrounds.")
 	flag.Parse()
 	if onnxruntimeLibPath == "" {
