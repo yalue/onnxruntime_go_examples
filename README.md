@@ -53,7 +53,7 @@ List of Examples
    using a pytorch script contained in the directory) on a tiny amount of
    hardcoded data.  The source code is very heavily commented for reference.
 
- - `mnist`: This example uses a small CNN trained to identify handwritten
-   digits from the MNIST dataset. It takes a single input as an argument, and
-   outputs the digit it is most likely to be.
+ - `mnist`: This example runs a CNN trained to identify handwritten digits from
+   the MNIST dataset. It processes a single input image, and outputs the digit
+   it is most likely to contain.
 
