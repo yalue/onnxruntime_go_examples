@@ -66,7 +66,7 @@ type ProcessedImage struct {
 	// pixel in the 28x28 output image.
 	dx, dy float32
 
-	// The wrapped input image.
+	// The input image being transformed
 	pic image.Image
 
 	// If true, the grayscale values in the postprocessed image will be
@@ -84,13 +84,13 @@ func (p *ProcessedImage) Bounds() image.Rectangle {
 	return image.Rect(0, 0, 28, 28)
 }
 
-// Returns the average grayscale value of all pixels within the original image.
+// Returns an average grayscale value using the pixels in the input image.
 func (p *ProcessedImage) At(x, y int) color.Color {
 	if (x < 0) || (x >= 28) || (y < 0) || (y >= 28) {
 		return color.Black
 	}
 
-	// Compute the "window" of pixels in the input image we'll be averaging.
+	// Compute the window of pixels in the input image we'll be averaging.
 	startX := int(float32(x) * p.dx)
 	endX := int(float32(x+1) * p.dx)
 	if endX == startX {
@@ -204,21 +204,24 @@ func classifyDigit(onnxruntimeLibPath, imagePath string,
 			postprocessedPath)
 	}
 
-	// Actually set up the network.
+	// Create and populate the input tensor
 	inputShape := ort.NewShape(1, 1, 28, 28)
 	inputData := inputImage.GetNetworkInput()
-	fmt.Printf("Input data: %v\n", inputData)
 	input, e := ort.NewTensor(inputShape, inputData)
 	if e != nil {
 		return fmt.Errorf("Error creating input tensor: %w", e)
 	}
 	defer input.Destroy()
-	outputData := make([]float32, 10)
-	output, e := ort.NewTensor(ort.NewShape(1, 10), outputData)
+
+	// Create the output tensor
+	output, e := ort.NewEmptyTensor[float32](ort.NewShape(1, 10))
 	if e != nil {
 		return fmt.Errorf("Error creating output tensor: %w", e)
 	}
 	defer output.Destroy()
+
+	// The input and output names are required by this network; they can be
+	// found on the MNIST ONNX models page linked in the README.
 	session, e := ort.NewAdvancedSession("./mnist.onnx",
 		[]string{"Input3"}, []string{"Plus214_Output_0"},
 		[]ort.ArbitraryTensor{input}, []ort.ArbitraryTensor{output}, nil)
@@ -234,6 +237,7 @@ func classifyDigit(onnxruntimeLibPath, imagePath string,
 	}
 
 	fmt.Printf("Output probabilities:\n")
+	outputData := output.GetData()
 	maxIndex := 0
 	maxProbability := float32(-1.0e9)
 	for i, v := range outputData {

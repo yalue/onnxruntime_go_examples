@@ -66,7 +66,7 @@ func runTest(onnxruntimeLibPath string) error {
 	// or write outputs. Here, we'll create a 1x4 input tensor initialized
 	// with some preset data. The inputData slice can be modified directly to
 	// change the input values, even after creating the inputTensor.
-	inputData := []float32{0.0, 0.3, 0.6, 0.9}
+	inputData := []float32{0.2, 0.3, 0.6, 0.9}
 	// The tensor's shape is actually 1x1x4 rather than 1x4 because the first
 	// dimension in the PyTorch script was used for batch size.
 	inputTensor, e := ort.NewTensor(ort.NewShape(1, 1, 4), inputData)

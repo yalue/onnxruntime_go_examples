@@ -38,11 +38,11 @@ go build
 
 # You can specify any version of the onnxruntime library here, but this would
 # be the correct library version on 64-bit AMD or Intel Linux systems.
-./sum_and_difference --onnxruntime_lib ../third_party/onnxruntime_x86_64.so
+./sum_and_difference --onnxruntime_lib ../third_party/onnxruntime.so
 ```
 
-Though different examples may use different mechanisms for locating the
-correct shared library.
+Be aware that different examples may use different mechanisms for locating the
+correct shared library version.
 
 
 List of Examples
@@ -51,7 +51,7 @@ List of Examples
  - `sum_and_difference`: This is the simplest example, copied from a unit test
    in the `onnxruntime_go` library.  It uses a basic neural network (trained
    using a pytorch script contained in the directory) on a tiny amount of
-   hardcoded data.
+   hardcoded data.  The source code is very heavily commented for reference.
 
  - `mnist`: This example uses a small CNN trained to identify handwritten
    digits from the MNIST dataset. It takes a single input as an argument, and

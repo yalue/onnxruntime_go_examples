@@ -1,10 +1,11 @@
 # This script sets up and "trains" a toy pytorch network, that trains a NN to
 # map a 1x4 vector to a 1x2 vector containing [sum, max difference] of the
-# input values. Finally, it exports the network to an ONNX file to use in
-# testing.
+# input values. Finally, it exports the network to an ONNX file.
+#
+# This script is adapted from one used in unit-testing onnxruntime_go to use
+# a slightly bigger neural network.
 import torch
 from torch.nn.functional import relu
-import json
 
 def fake_dataset(size):
     """ Returns a dataset filled with our fake training data. """
@@ -22,10 +23,11 @@ class SumAndDiffModel(torch.nn.Module):
         super().__init__()
         # We'll do four 1x4 convolutions to make the network more interesting.
         self.conv = torch.nn.Conv1d(1, 4, 4)
-        # We'll follow the conv with a FC layer to produce the outputs. The
-        # input to the FC layer are the 4 conv outputs concatenated with the
-        # original input.
-        self.fc = torch.nn.Linear(8, 2)
+        # We'll follow the conv with two FC layers to produce the outputs. The
+        # input to the first FC layer are the 4 conv outputs concatenated with
+        # the original input.
+        self.fc1 = torch.nn.Linear(8, 32)
+        self.fc2 = torch.nn.Linear(32, 2)
 
     def forward(self, data):
         batch_size = len(data)
@@ -33,7 +35,8 @@ class SumAndDiffModel(torch.nn.Module):
         conv_flattened = torch.flatten(conv_out, start_dim=1)
         data_flattened = torch.flatten(data, start_dim=1)
         combined = torch.cat((conv_flattened, data_flattened), dim=1)
-        output = relu(self.fc(combined))
+        output = relu(self.fc1(combined))
+        output = relu(self.fc2(output))
         output = output.view(batch_size, 1, 2)
         return output
 
@@ -71,23 +74,9 @@ def print_sample(model):
     print("    Produced output: " + str(result))
     return None
 
-def save_sample_json(model, output_name):
-    """ Saves a JSON file containing an input and an output from the network,
-    for use when validating execution of the ONNX network. """
-    example_input = torch.rand(1, 1, 4)
-    result = model(example_input)
-    json_content = {}
-    json_content["input_shape"] = list(example_input.shape)
-    json_content["flattened_input"] = list(example_input.flatten().tolist())
-    json_content["output_shape"] = list(result.shape)
-    json_content["flattened_output"] = list(result.flatten().tolist())
-    with open(output_name, "w") as f:
-        json.dump(json_content, f, indent="  ")
-    return None
-
 def main():
     print("Generating train and test datasets...")
-    train_data = fake_dataset(100 * 1000)
+    train_data = fake_dataset(200 * 1000)
     train_loader = torch.utils.data.DataLoader(dataset=train_data,
         batch_size=16, shuffle=True)
     test_data = fake_dataset(10 * 1000)
@@ -96,8 +85,8 @@ def main():
     model = SumAndDiffModel()
     model.train()
     loss_function = torch.nn.L1Loss(reduction="mean")
-    optimizer = torch.optim.Adam(model.parameters(), lr=0.00005)
-    for epoch in range(8):
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
+    for epoch in range(4):
         i = 0
         total_loss = 0.0
         for in_data, desired_result in train_loader:
@@ -122,7 +111,6 @@ def main():
     model.eval()
     with torch.no_grad():
         save_model(model, "example_network.onnx")
-        save_sample_json(model, "example_network_results.json")
         print_sample(model)
     print("Done!")
 
