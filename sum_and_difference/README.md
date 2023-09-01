@@ -21,9 +21,9 @@ go build .
 Should output the following if successful:
 ```
 The network ran without errors.
-  Input data: [0 0.3 0.6 0.9]
-  Approximate sum of inputs: 1.799973
-  Approximate max difference between any two inputs: 0.601702
+  Input data: [0.2 0.3 0.6 0.9]
+  Approximate sum of inputs: 1.999988
+  Approximate max difference between any two inputs: 0.607343
 The network seemed to run OK!
 ```
 
