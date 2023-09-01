@@ -19,7 +19,7 @@ will need to supply it with an input image.
 ./mnist -image_path ./tiny_5.png
 
 # There's an additional flag if you want to invert the image colors. The
-# network is trained to on images with black backgrounds, so you may want to
+# network is trained on images with black backgrounds, so you may want to
 # invert images with white backgrounds.
 ./mnist -image_path ./seven.png -invert_image
 ```
