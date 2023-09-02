@@ -10,6 +10,7 @@ import (
 	"io"
 	"math"
 	"os"
+	"runtime"
 	"sort"
 
 	"github.com/8ff/prettyTimer"
@@ -21,7 +22,6 @@ import (
 var modelPath = "./yolov8n.onnx"
 
 // Embed the libonnxruntime shared library into the binary
-var libPath = "../third_party/onnxruntime_arm64.dylib"
 var imagePath = "./car.png"
 var useCoreML = false
 var blank []float32
@@ -138,8 +138,28 @@ func runInference(modelSes ModelSession, input []float32) ([]float32, error) {
 	return modelSes.Output.GetData(), nil
 }
 
+func getSharedLibPath() string {
+	if runtime.GOOS == "windows" {
+		if runtime.GOARCH == "amd64" {
+			return "../third_party/onnxruntime.dll"
+		}
+	}
+	if runtime.GOOS == "darwin" {
+		if runtime.GOARCH == "arm64" {
+			return "../third_party/onnxruntime_arm64.dylib"
+		}
+	}
+	if runtime.GOOS == "linux" {
+		if runtime.GOARCH == "arm64" {
+			return "../third_party/onnxruntime_arm64.so"
+		}
+		return "../third_party/onnxruntime.so"
+	}
+	panic("Unable to find a version of the onnxruntime library supporting this system.")
+}
+
 func initSession() (ModelSession, error) {
-	ort.SetSharedLibraryPath(libPath)
+	ort.SetSharedLibraryPath(getSharedLibPath())
 	err := ort.InitializeEnvironment()
 	if err != nil {
 		return ModelSession{}, err

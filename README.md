@@ -57,3 +57,7 @@ List of Examples
    the MNIST dataset. It processes a single input image, and outputs the digit
    it is most likely to contain.
 
+ - `image_object_detect`: This example uses the YOLOv8 network to detect a list
+   of objects in an input image. It also attempts to use CoreML if the
+   `USE_COREML` environment variable is set to `"true"`.
+

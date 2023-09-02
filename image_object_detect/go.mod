@@ -1,4 +1,4 @@
-module onnxruntime_go_examples
+module github.com/yalue/onnxruntime_go_examples/image_object_detect
 
 go 1.21.0
 
