@@ -57,6 +57,10 @@ List of Examples
    the MNIST dataset. It processes a single input image, and outputs the digit
    it is most likely to contain.
 
+ - `mnist_float16`: This example is identical to the plain `mnist` example,
+   except it uses a 16-bit network, including 16-bit inputs and outputs. It is
+   intended to illustrate how to use a float16 `CustomDataTensor`.
+
  - `image_object_detect`: This example uses the YOLOv8 network to detect a list
    of objects in an input image. It also attempts to use CoreML if the
    `USE_COREML` environment variable is set to `true`.
