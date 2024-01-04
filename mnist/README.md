@@ -2,7 +2,7 @@
 ===============================
 
 This example makes use of the pre-trained MNIST network, obtained from the
-[official ONNX models repository](https://github.com/onnx/models/tree/main/vision/classification/mnist).
+[official ONNX models repository](https://github.com/onnx/models/tree/ddbbd1274c8387e3745778705810c340dea3d8c7/validated/vision/classification/mnist).
 Specifically, the included `mnist.onnx` is MNIST-12 from the above link.
 
 This example uses the network to analyze single image files specified on the
