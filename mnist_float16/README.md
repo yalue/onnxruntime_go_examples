@@ -35,7 +35,7 @@ This program is used in the exact same way as `../mnist`. Build it using
 For example,
 ```bash
 go build .
-./mnist_float16 ../mnist/eight.png
+./mnist_float16 -image_path ../mnist/eight.png
 ```
 
 Will produce the following output:
