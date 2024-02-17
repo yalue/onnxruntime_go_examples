@@ -61,6 +61,10 @@ List of Examples
    except it uses a 16-bit network, including 16-bit inputs and outputs. It is
    intended to illustrate how to use a float16 `CustomDataTensor`.
 
+ - `onnx_list_inputs_and_outputs`: This example prints the inputs and outputs
+   of a user-specified .onnx file to stdout. It is intended to illustrate the
+   usage of the `onnxruntime_go.GetInputOutputInfo` function.
+
  - `image_object_detect`: This example uses the YOLOv8 network to detect a list
    of objects in an input image. It also attempts to use CoreML if the
    `USE_COREML` environment variable is set to `true`.
