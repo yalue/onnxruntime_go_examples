@@ -24,8 +24,10 @@ import (
 // Attempts to find and return a path to a version of the onnxruntime shared
 // library compatible with the current OS and system architecture.
 func getDefaultSharedLibPath() string {
-	// For now, we only include libraries for x86_64 windows, ARM64 darwin, and
-	// x86_64 or ARM64 Linux. In the future, libraries may be added or removed.
+	// For now, the third_party directory includes libraries for x86_64
+	// windows, ARM64 and AMD64 darwin, and x86_64 or ARM64 Linux. The point of
+	// these examples is to show _how_ to select libraries, rather than to
+	// provide broad support, so this will probably not be expanded.
 	if runtime.GOOS == "windows" {
 		if runtime.GOARCH == "amd64" {
 			return "../third_party/onnxruntime.dll"
@@ -34,6 +36,9 @@ func getDefaultSharedLibPath() string {
 	if runtime.GOOS == "darwin" {
 		if runtime.GOARCH == "arm64" {
 			return "../third_party/onnxruntime_arm64.dylib"
+		}
+		if runtime.GOARCH == "amd64" {
+			return "../third_party/onnxruntime_amd64.dylib"
 		}
 	}
 	if runtime.GOOS == "linux" {

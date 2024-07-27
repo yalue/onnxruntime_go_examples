@@ -69,3 +69,8 @@ List of Examples
    of objects in an input image. It also attempts to use CoreML if the
    `USE_COREML` environment variable is set to `true`.
 
+ - `non_tensor_outputs`: This example runs a network produced by the `sklearn`
+   python library, which is notable for outputting ONNX `Map` and `Sequence`
+   types. This example is meant to serve as a reference for how users may
+   access `Map` and `Sequence` contents.
+

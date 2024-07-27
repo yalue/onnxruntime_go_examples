@@ -30,6 +30,9 @@ func getDefaultSharedLibPath() string {
 		if runtime.GOARCH == "arm64" {
 			return "../third_party/onnxruntime_arm64.dylib"
 		}
+		if runtime.GOARCH == "amd64" {
+			return "../third_party/onnxruntime_amd64.dylib"
+		}
 	}
 	if runtime.GOOS == "linux" {
 		if runtime.GOARCH == "arm64" {
