@@ -90,3 +90,7 @@ using the `onnxruntime` library in python, this is not the place to get help
 with it.  Learning to use `onnxruntime` in python is easier than in Go, and
 will give a point of reference that you understand the network you are trying to
 run, and that your inputs and outputs are correct.
+
+In short, this repository is intended to provide examples for using the
+`onnxruntime_go` wrapper in specific.  Users are expected to already understand
+`.onnx` files and how to use `onnxruntime` in general.
