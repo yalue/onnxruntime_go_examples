@@ -74,3 +74,23 @@ List of Examples
    types. This example is meant to serve as a reference for how users may
    access `Map` and `Sequence` contents.
 
+Contributing and Opening New Issues
+-----------------------------------
+
+PRs with new examples to this repository are welcome.  Each example should be
+in its own subdirectory with its own go.mod file, and include only minimal
+dependencies (i.e., do not include several hundred megabytes of .onnx files or
+data). Each example should include a README, be formatted using `gofmt`, and
+contain ample comments to serve as a useful example to other users.
+
+Please limit open issues in this repository to bugs with existing examples.
+Issues are _not_ a place to request help with `onnxruntime` in general. Such
+issues will be ignored going forward.  If you have not run your `.onnx` network
+using the `onnxruntime` library in python, this is not the place to get help
+with it.  Learning to use `onnxruntime` in python is easier than in Go, and
+will give a point of reference that you understand the network you are trying to
+run, and that your inputs and outputs are correct.
+
+In short, this repository is intended to provide examples for using the
+`onnxruntime_go` wrapper in specific.  Users are expected to already understand
+`.onnx` files and how to use `onnxruntime` in general.
