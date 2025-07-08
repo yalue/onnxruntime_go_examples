@@ -18,8 +18,8 @@ platform of choice. CoreML should almost always be available on Apple hardware,
 but other supported acceleration frameworks (e.g., TensorRT or CUDA) may have
 additional prerequisites, which are documented in
 [the official onnxruntime documentation](https://onnxruntime.ai/docs/execution-providers/).
-Note that not all execution providers supported by `onnxruntime` itself are
-supported by `onnxruntime_go`.
+Not all execution providers supported by `onnxruntime` itself are supported by
+`onnxruntime_go`.
 
 The `onnxruntime` shared libraries for some common platforms are included
 under the `third_party/` directory in this repository.
@@ -48,10 +48,10 @@ correct shared library version.
 List of Examples
 ----------------
 
- - `sum_and_difference`: This is the simplest example, copied from a unit test
-   in the `onnxruntime_go` library.  It uses a basic neural network (trained
-   using a pytorch script contained in the directory) on a tiny amount of
-   hardcoded data.  The source code is very heavily commented for reference.
+ - `sum_and_difference`: This is the simplest example, copied from a former
+   unit test in the `onnxruntime_go` library.  It uses a basic neural network
+   (trained using a pytorch script contained in the directory) on a tiny amount
+   of hardcoded data.  The source code is very heavily commented for reference.
 
  - `mnist`: This example runs a CNN trained to identify handwritten digits from
    the MNIST dataset. It processes a single input image, and outputs the digit
@@ -92,5 +92,6 @@ will give a point of reference that you understand the network you are trying to
 run, and that your inputs and outputs are correct.
 
 In short, this repository is intended to provide examples for using the
-`onnxruntime_go` wrapper in specific.  Users are expected to already understand
-`.onnx` files and how to use `onnxruntime` in general.
+`onnxruntime_go` wrapper specifically.  Users are expected to already
+understand `.onnx` files and how to use `onnxruntime` in general.
+

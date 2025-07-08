@@ -24,7 +24,7 @@ will need to supply it with an input image.
 ./mnist -image_path ./seven.png -invert_image
 ```
 
-Note that the program will also create `postprocessed_input_image.png` in the
-current directory, showing the image that was passed to the neural network
-after resizing and converting to grayscale.
+The program will also create `postprocessed_input_image.png` in the current
+directory, showing the image that was passed to the neural network after
+resizing and converting to grayscale.
 
