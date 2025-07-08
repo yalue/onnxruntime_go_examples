@@ -77,6 +77,7 @@ func run() int {
 	if onnxNetworkPath == "" {
 		fmt.Println("You must specify a .onnx network to list the inputs and" +
 			" outputs for. Run with -help for more information.")
+		return 1
 	}
 	e := showNetworkInputsAndOutputs(onnxruntimeLibPath, onnxNetworkPath)
 	if e != nil {
