@@ -74,6 +74,11 @@ List of Examples
    types. This example is meant to serve as a reference for how users may
    access `Map` and `Sequence` contents.
 
+ - `string_tensor`: This example runs a network that converts a string into
+   upper and lowercase. It is intended to serve as a reference for using
+   string tensors, which work slightly differently from the normal
+   `onnxruntime_go.Tensor[T]` instances.
+
 Contributing and Opening New Issues
 -----------------------------------
 
