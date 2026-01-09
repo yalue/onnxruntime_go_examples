@@ -89,7 +89,7 @@ func (p *ProcessedImage) Bounds() image.Rectangle {
 // Returns an average grayscale value using the pixels in the input image.
 func (p *ProcessedImage) At(x, y int) color.Color {
 	if (x < 0) || (x >= 28) || (y < 0) || (y >= 28) {
-		return color.Black
+		return grayscaleFloat(0.0)
 	}
 
 	// Compute the window of pixels in the input image we'll be averaging.
@@ -255,7 +255,7 @@ func classifyDigit(onnxruntimeLibPath, imagePath string,
 	// found on the MNIST ONNX models page linked in the README.
 	session, e := ort.NewAdvancedSession("./mnist_float16.onnx",
 		[]string{"Input3"}, []string{"Plus214_Output_0"},
-		[]ort.ArbitraryTensor{input}, []ort.ArbitraryTensor{output}, nil)
+		[]ort.Value{input}, []ort.Value{output}, nil)
 	if e != nil {
 		return fmt.Errorf("Error creating MNIST network session: %w", e)
 	}
