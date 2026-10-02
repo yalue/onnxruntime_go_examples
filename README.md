@@ -79,6 +79,11 @@ List of Examples
    string tensors, which work slightly differently from the normal
    `onnxruntime_go.Tensor[T]` instances.
 
+ - `open_wake_word`: This example uses the pre-trained openWakeWord models to
+   detect the wake word "hey jarvis" in a `.wav` file. It chains together
+   three networks, and illustrates using `DynamicAdvancedSession` with
+   automatically-allocated outputs and batched inputs.
+
 Contributing and Opening New Issues
 -----------------------------------
 
